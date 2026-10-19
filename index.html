@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#070b16">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>LAST DANCE AT KOKOMO · A Rhythm Horror Game</title>
+<style>
+:root{--ink:#070b16;--deep:#111629;--cream:#fff2d8;--gold:#ffcc73;--coral:#ff667d;--mint:#4bedcd;--blue:#79c7ff;--violet:#b38bff;--line:#ffffff28;font-synthesis:none}
+*{box-sizing:border-box}html,body{margin:0;background:var(--ink);color:var(--cream);font-family:system-ui,-apple-system,Segoe UI,sans-serif;overscroll-behavior:none}body{min-height:100dvh}button{font:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}button:focus-visible{outline:2px solid white;outline-offset:3px}#app{position:relative;width:min(100vw,560px);height:100dvh;max-height:1000px;min-height:560px;margin:auto;overflow:hidden;background:#080e1c;isolation:isolate;box-shadow:0 0 0 1px #ffffff13,0 0 80px #010205}
+@media(min-width:800px){body{display:grid;place-items:center;background:radial-gradient(ellipse at 50% 0,#293656,#080a11 72%)}#app{border-radius:20px}}
+.screen{position:absolute;inset:0;display:none}.screen.show{display:flex}.screen#home,.screen#story,.screen#results,.screen#ending{flex-direction:column}
+.backdrop{position:absolute;inset:0;background:#111a2a center/cover no-repeat;filter:saturate(.93);z-index:-2}.backdrop:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#06081540 0%,#05081735 28%,#060811f0 82%,#050711 100%)}
+.pixel-overlay{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,#00000012 0px,#00000012 1px,transparent 1px,transparent 4px);opacity:.28;mix-blend-mode:multiply;z-index:5}
+.brand{letter-spacing:.19em;font-size:10px;font-weight:900;color:var(--gold)}.h-title{font-size:clamp(44px,10vw,63px);letter-spacing:-.065em;font-weight:1000;line-height:.91;margin:15px 0;text-transform:uppercase;text-shadow:0 4px 0 #24122c,0 11px 30px #000}.h-title em{display:block;color:var(--coral);font-style:normal}.tagline{font-size:15px;line-height:1.55;color:#e8e3ea;max-width:31ch}.topline{display:flex;align-items:center;justify-content:space-between;gap:12px}.chip{background:#ffffff1b;border:1px solid #ffffff35;border-radius:50px;padding:5px 10px;color:#f2e4dc;font-size:10px;font-weight:900;letter-spacing:.09em}
+#home{padding:calc(env(safe-area-inset-top) + 25px) 25px calc(env(safe-area-inset-bottom) + 28px);justify-content:space-between}.home-content{margin-top:auto;padding-bottom:18px}.home-controls{display:grid;gap:12px}.home-group{display:flex;align-items:center;justify-content:space-between;background:#ffffff11;border:1px solid #ffffff2a;border-radius:15px;padding:11px 13px}.home-group span{font-size:11px;letter-spacing:.13em;font-weight:900;color:#d3cfda}.seg{display:flex;gap:5px}.seg button{border:0;background:#ffffff12;border-radius:8px;color:#eee;font-weight:900;font-size:11px;padding:8px 11px}.seg button.on{background:#ffe1a6;color:#171322}.big-btn{width:100%;min-height:56px;border:0;border-radius:13px;display:flex;align-items:center;justify-content:center;gap:8px;background:var(--gold);color:#211322;font-weight:1000;letter-spacing:.12em;font-size:13px;box-shadow:0 6px 0 #b46c32,0 12px 35px #0009}.big-btn:active{transform:translateY(4px);box-shadow:0 2px 0 #b46c32}.alt-btn{background:#ffffff19;color:white;box-shadow:none;border:1px solid #ffffff44}.secondary{font-size:11px;color:#d0c9d4;letter-spacing:.04em;line-height:1.4}.keys-mini{display:flex;gap:7px;margin:20px 0 9px}.keys-mini span{flex:1;text-align:center;font-size:27px;line-height:51px;border-radius:12px;border:1px solid #ffffff24;background:#080f24be;text-shadow:0 0 12px currentColor}.keys-mini span:nth-child(1){color:var(--coral)}.keys-mini span:nth-child(2){color:var(--blue)}.keys-mini span:nth-child(3){color:var(--gold)}.keys-mini span:nth-child(4){color:var(--violet)}
+#story{justify-content:flex-end;padding:calc(env(safe-area-inset-top) + 22px) 22px calc(env(safe-area-inset-bottom) + 26px);background:#060915}.story-art{position:absolute;inset:0;background-size:cover;background-position:center;transform:scale(1.04);animation:pushin 12s ease-in-out infinite alternate;z-index:-2}.story-art:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#05071544 0%,#00000005 27%,#0506128f 60%,#070a15 91%)}@keyframes pushin{from{transform:scale(1.02) translateX(-1%)}to{transform:scale(1.12) translateX(1%)}}.story-kicker{color:var(--gold);font-size:11px;font-weight:1000;letter-spacing:.17em}.story-title{font-size:clamp(30px,8vw,46px);text-transform:uppercase;font-weight:1000;line-height:1.05;letter-spacing:-.045em;margin:9px 0}.story-desc{font-size:15px;line-height:1.57;margin:0 0 22px;max-width:39ch;color:#f2e8dc;text-shadow:0 1px 8px #000}.story-dots{display:flex;gap:6px;margin:10px 0 21px}.story-dots span{width:24px;height:4px;background:#ffffff4b;border-radius:4px}.story-dots span.on{background:var(--gold)}.story-top{position:absolute;left:22px;right:22px;top:calc(env(safe-area-inset-top) + 24px)}.story-skips{display:flex;gap:10px}.story-skips .big-btn{flex:1}.text-btn{background:none;border:none;color:#f5d4b1;font-weight:800;letter-spacing:.1em;font-size:10px;padding:12px 0}
+#game{flex-direction:column;background:#070a12}.game-bar{position:relative;flex-shrink:0;z-index:2;padding:calc(env(safe-area-inset-top) + 8px) 13px 10px;background:#070c19;border-bottom:1px solid #ffffff1a}.game-bar .topline{gap:8px}.stage-label{font-weight:1000;letter-spacing:.05em;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:45vw}.stat-pair{display:flex;align-items:center;gap:9px}.stat{font-size:12px;font-weight:1000;color:#ffdfa9;font-variant-numeric:tabular-nums}.pause{border:1px solid #ffffff2f;background:#ffffff12;color:#fff;min-width:36px;height:32px;border-radius:8px;font-size:17px}.progress-rail{height:4px;border-radius:4px;background:#ffffff24;margin-top:9px;overflow:hidden}.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--mint),var(--gold),var(--coral));transition:width .1s linear}
+.stage-hero{height:clamp(125px,19dvh,185px);position:relative;background:#080e17 center/cover no-repeat;border-bottom:2px solid #e2c18440;flex-shrink:0}.stage-hero:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#070b18 0%,#070b1820 40%,#070b1850 100%)}.stage-copy{position:absolute;left:18px;bottom:12px;z-index:1}.stage-copy small{color:var(--gold);font-size:9px;font-weight:900;letter-spacing:.18em}.stage-copy strong{display:block;font-weight:1000;font-size:20px;text-transform:uppercase;text-shadow:2px 2px 0 #030506;letter-spacing:-.03em}.stage-hero .chapter{position:absolute;right:12px;top:9px;z-index:1;background:#070916b8;border:1px solid #ffffff35;border-radius:6px;padding:5px 8px;font-size:10px;font-weight:900;letter-spacing:.1em}
+.board-wrap{min-height:0;flex:1;position:relative;padding:0 15px;background:radial-gradient(ellipse at 50% 0,#1b2445,#080b1c 82%)}.board{position:relative;width:100%;height:100%;max-width:450px;margin:auto;border-left:1px solid #ffffff17;border-right:1px solid #ffffff17;overflow:hidden;background:linear-gradient(90deg,#fd6c8410 0 25%,#60baff12 25% 50%,#ffcb7112 50% 75%,#b38cff12 75% 100%)}.board:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent calc(25% - 1px),#ffffff22 25%,transparent calc(25% + 1px),transparent calc(50% - 1px),#ffffff22 50%,transparent calc(50% + 1px),transparent calc(75% - 1px),#ffffff22 75%,transparent calc(75% + 1px));pointer-events:none}.board canvas{position:relative;width:100%;height:100%;display:block;z-index:1}.judge{pointer-events:none;position:absolute;left:0;right:0;top:41%;text-align:center;z-index:2;font-size:24px;font-weight:1000;letter-spacing:.1em;text-shadow:0 3px #090713,0 0 18px currentColor;opacity:0;transform:scale(1.2);transition:opacity .13s,transform .13s}.judge.pop{opacity:1;transform:scale(1)}.combo-float{position:absolute;right:12px;top:9px;color:var(--gold);font-size:11px;letter-spacing:.1em;font-weight:1000;text-align:right;z-index:3}.combo-float b{font-size:22px;display:block;line-height:1.1}.count-in{position:absolute;inset:0;display:none;place-items:center;background:#05081982;z-index:5;text-align:center;font-size:70px;font-weight:1000;color:var(--gold);text-shadow:0 7px #171021}.count-in.show{display:grid}.count-in small{display:block;font-size:13px;letter-spacing:.13em;color:white}
+.control-wrap{position:relative;padding:9px 12px calc(env(safe-area-inset-bottom) + 11px);background:#080c17;border-top:1px solid #ffffff25;flex-shrink:0}.note-legend{height:20px;display:flex;align-items:center;justify-content:space-between;gap:5px;color:#b9b9c7;font-size:9px;font-weight:800;letter-spacing:.06em;margin-bottom:7px}.pad-row{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;max-width:450px;margin:auto}.pad{touch-action:none;user-select:none;-webkit-user-select:none;position:relative;height:clamp(70px,10.8dvh,100px);border:1px solid #ffffff4d;color:#fff;border-radius:13px;background:linear-gradient(145deg,#222942,#111729);font-size:clamp(32px,11vw,49px);font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 -7px 0 #0007,0 5px 0 #010510;overflow:hidden;transition:transform .04s,filter .05s}.pad:after{content:"";position:absolute;bottom:4px;left:16%;right:16%;height:4px;border-radius:8px;background:var(--padcolor);box-shadow:0 0 15px var(--padcolor)}.pad.down{transform:translateY(5px);background:color-mix(in srgb,var(--padcolor) 29%,#151729);box-shadow:inset 0 0 22px var(--padcolor),0 0 12px var(--padcolor);filter:brightness(1.14)}.pad:nth-child(1){--padcolor:var(--coral);color:var(--coral)}.pad:nth-child(2){--padcolor:var(--blue);color:var(--blue)}.pad:nth-child(3){--padcolor:var(--gold);color:var(--gold)}.pad:nth-child(4){--padcolor:var(--violet);color:var(--violet)}.pad .num{position:absolute;top:7px;left:8px;font-size:9px;color:#d5d3e2}
+#results,#ending{padding:calc(env(safe-area-inset-top) + 28px) 24px calc(env(safe-area-inset-bottom) + 27px);justify-content:flex-end}.result-panel{background:#070b19d9;border:1px solid #ffe1a65c;border-radius:20px;padding:20px;backdrop-filter:blur(11px);box-shadow:0 20px 50px #0007}.result-grade{font-size:80px;font-weight:1000;color:var(--gold);line-height:1;text-shadow:5px 5px 0 #9e4550}.result-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:16px 0 19px}.result-stats div{background:#ffffff12;border-radius:8px;padding:10px 5px;text-align:center}.result-stats strong{display:block;font-size:19px;color:#fff4d5;font-variant-numeric:tabular-nums}.result-stats small{display:block;font-size:9px;color:#aab2c1;letter-spacing:.08em}.footer-hint{font-size:12px;text-align:center;color:#d5cada;line-height:1.45;margin-top:14px}.ending-title{font-weight:1000;font-size:clamp(42px,10vw,68px);line-height:.92;margin:10px 0 15px;letter-spacing:-.065em;text-transform:uppercase}.ending-desc{font-size:17px;line-height:1.52;color:#f0decb;max-width:33ch;margin-bottom:26px}.bottom-fog{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,transparent 21%,#070a15 95%);z-index:-1}
+#pause-screen{display:none;position:absolute;inset:0;background:#050915ed;z-index:20;padding:30px;align-items:center;justify-content:center}.pause-card{text-align:center;max-width:320px;width:100%}.pause-card h2{font-size:39px;line-height:1;margin:0 0 18px}.pause-card button{margin-top:14px}.modal-help{line-height:1.7;color:#d1c9d3;font-size:14px;margin-bottom:25px}
+@media(max-height:680px){#home{padding:18px 20px 23px}.h-title{font-size:48px;margin:7px 0}.keys-mini{margin:12px 0 6px}.keys-mini span{line-height:43px}.stage-hero{height:110px}.control-wrap{padding-top:6px}.note-legend{height:13px}.pad{height:67px}.game-bar{padding-top:6px}.story-title{font-size:32px}.story-desc{font-size:13px}}
+</style>
+</head>
+<body>
+<div id="app">
+  <section class="screen show" id="home">
+    <div class="backdrop" id="home-bg"></div><div class="pixel-overlay"></div>
+    <div class="topline"><div class="brand">KOKOMO CONFERENCE CENTER · 199X</div><div class="chip">ARCADE HORROR</div></div>
+    <div class="home-content">
+      <div class="brand">A LOVE STORY WITH A BAD BEAT</div>
+      <h1 class="h-title">LAST DANCE <em>AT KOKOMO</em></h1>
+      <p class="tagline">One perfect night. One very wrong concert. Tap to the rhythm. Survive the gala. Find each other.</p>
+      <div class="keys-mini"><span>◀</span><span>▼</span><span>▲</span><span>▶</span></div>
+      <p class="secondary">TAP arrows • HOLD glowing tails • HIT both arrows together • CATCH ★ bonus beats</p>
+    </div>
+    <div class="home-controls">
+      <div class="home-group"><span>DIFFICULTY</span><div class="seg"><button id="diff-story" class="on">STORY</button><button id="diff-arcade">ARCADE</button></div></div>
+      <button id="start-btn" class="big-btn">▶ START THE STORY</button>
+      <div class="topline"><button id="how-btn" class="text-btn">HOW TO PLAY?</button><button id="sound-btn" class="text-btn">♫ SOUND ON</button></div>
+    </div>
+  </section>
+  <section class="screen" id="story">
+    <div id="story-art" class="story-art"></div><div class="pixel-overlay"></div>
+    <div class="story-top topline"><span id="story-episode" class="chip">EPISODE 01</span><span id="story-count" class="chip">1 / 3</span></div>
+    <div class="story-content">
+      <div id="story-kicker" class="story-kicker">BEFORE THE NIGHTMARE</div>
+      <h2 id="story-title" class="story-title">SOMETHING IN THE MIRROR</h2>
+      <p id="story-desc" class="story-desc"></p>
+      <div id="story-dots" class="story-dots"></div>
+      <div class="story-skips"><button id="story-next" class="big-btn">NEXT PANEL ›</button><button id="story-skip" class="text-btn">SKIP ››</button></div>
+    </div>
+  </section>
+  <section class="screen" id="game">
+    <div class="game-bar"><div class="topline"><strong id="stage-label" class="stage-label">CH.01 · GARAGE ECHO</strong><div class="stat-pair"><span id="score" class="stat">000000</span><button id="pause-btn" class="pause" aria-label="Pause">Ⅱ</button></div></div><div class="progress-rail"><div id="progress" class="progress-fill"></div></div></div>
+    <div id="stage-hero" class="stage-hero"><div class="chapter" id="bpm-indicator">94 BPM</div><div class="stage-copy"><small id="stage-subtitle">THE QUIET BEFORE</small><strong id="stage-title">GARAGE ECHO</strong></div></div>
+    <div class="board-wrap"><div class="board" id="board"><canvas id="note-canvas"></canvas><div id="judge" class="judge">PERFECT</div><div class="combo-float"><b id="combo-num">0</b>COMBO</div><div class="count-in" id="count-in"><div><small>GET READY</small>3</div></div></div></div>
+    <div class="control-wrap"><div class="note-legend"><span>★ = BONUS</span><span>▮ = HOLD UNTIL THE END</span><span>✦ = DOUBLE HIT</span></div><div class="pad-row" id="pads"><button class="pad" data-lane="0" aria-label="Left arrow"><span class="num">A / ←</span>◀</button><button class="pad" data-lane="1" aria-label="Down arrow"><span class="num">S / ↓</span>▼</button><button class="pad" data-lane="2" aria-label="Up arrow"><span class="num">W / ↑</span>▲</button><button class="pad" data-lane="3" aria-label="Right arrow"><span class="num">D / →</span>▶</button></div></div>
+  </section>
+  <section class="screen" id="results"><div id="result-bg" class="backdrop"></div><div class="pixel-overlay"></div><div class="result-panel"><div class="brand" id="result-chapter">STAGE 01 COMPLETE</div><div class="topline"><div><h2 style="margin:10px 0 3px;font-weight:1000;font-size:28px">STAGE CLEAR!</h2><div class="secondary" id="result-note">Still breathing. Keep moving.</div></div><div id="result-grade" class="result-grade">A</div></div><div class="result-stats"><div><strong id="res-score">000000</strong><small>SCORE</small></div><div><strong id="res-acc">94%</strong><small>ACCURACY</small></div><div><strong id="res-combo">20</strong><small>MAX COMBO</small></div></div><button id="continue-btn" class="big-btn">▶ NEXT CINEMATIC</button></div></section>
+  <section class="screen" id="ending"><div id="ending-bg" class="backdrop"></div><div class="pixel-overlay"></div><div class="bottom-fog"></div><div class="brand">TRUE ENDING UNLOCKED</div><h2 class="ending-title">BACK IN<br><span style="color:var(--mint)">STEP.</span></h2><p class="ending-desc">When the music peaks, they find each other again in the chaos, grab hands, and break through the undead crowd together. The last beat carries them out of the conference center side by side.</p><div class="chip" id="final-score" style="width:max-content;margin-bottom:22px">TOTAL SCORE: 000000</div><button id="replay-btn" class="big-btn">↻ PLAY THE STORY AGAIN</button><p class="footer-hint">Reunion ending complete — love and rhythm win the night.</p></section>
+  <div id="pause-screen"><div class="pause-card"><div class="brand">ARCADE MODE</div><h2>PAUSED</h2><p class="modal-help">Tap the four arrows when notes reach the glowing line. For long notes, press and hold. Touch two arrows at once for linked beats. Misses never stop the story.</p><button id="resume-btn" class="big-btn">▶ RESUME</button><button id="restart-btn" class="big-btn alt-btn">↻ RESTART STAGE</button><button id="home-btn" class="text-btn">BACK TO TITLE</button></div></div>
+</div>
+<script>
+'use strict';
+const ASSETS = {"escape":"assets/escape.webp","auction":"assets/auction.webp","apart":"assets/apart.webp","lobby":"assets/lobby.webp","band":"assets/band.webp","door":"assets/door.webp","garage":"assets/garage.webp","mystery":"assets/mystery.webp","dinner":"assets/dinner.webp","drive":"assets/drive.webp"};
+const $ = (id)=>document.getElementById(id);
+const screens=['home','story','game','results','ending'];
+const STAGES=[
+ {id:'garage',title:'GARAGE ECHO',sub:'THE QUIET BEFORE',bpm:94,track:'PARKING LEVEL P1',image:'garage',tint:'#75c9ff',panels:[
+  ['drive','A PERFECT EVENING','He catches her smile in the rearview mirror. Far behind them, another passenger never moves.'],
+  ['garage','ARRIVALS','Their headlights sweep into the garage. A solitary figure watches from the upper ramp.'],
+  ['garage','DON’T LOOK UP','They laugh about finding parking. The figure above does not blink.']]},
+ {id:'lobby',title:'WELCOME HOME',sub:'THE DOORS ARE OPEN',bpm:106,track:'LOBBY LEVEL',image:'lobby',tint:'#ffd27a',panels:[
+  ['door','JUST ONE MORE PHOTO','He opens the car door. She smiles. A broken glass glitters beside the elevators.'],
+  ['lobby','THE RED CARPET','Gold lights, a smiling crowd and a registration desk with no one behind it.'],
+  ['mystery','SOMETHING IS OFF','A guest stands motionless by the ballroom doors. But the music sounds wonderful.']]},
+ {id:'auction',title:'GOING ONCE',sub:'BIDDING AFTER DARK',bpm:118,track:'ART AUCTION',image:'auction',tint:'#dba4ff',panels:[
+  ['mystery','THE GUEST LIST','Name tags litter the floor. The couple exchange a confused look.'],
+  ['auction','LOT NUMBER 217','At the auction, an older gentleman keeps raising his paddle. Over. And over.'],
+  ['auction','GOING TWICE','The auctioneer smiles too wide. The band shifts into a stranger rhythm.']]},
+ {id:'dinner',title:'DINNER BELLS',sub:'EVERYBODY TO THE TABLE',bpm:132,track:'BANQUET HALL',image:'dinner',tint:'#ff9a7c',panels:[
+  ['auction','THE LAST BID','The gavel strikes. Every guest turns their head at exactly the same moment.'],
+  ['dinner','DINNER IS SERVED','A glass shatters. The servers stop moving. Someone starts to scream.'],
+  ['dinner','SOMETHING HUNGRY','One smiling guest reaches for another guest’s shoulder—and will not let go.']]},
+ {id:'band',title:'DEAD AIR',sub:'THE BAND NEVER STOPS',bpm:144,track:'MAIN STAGE',image:'band',tint:'#a78aff',panels:[
+  ['dinner','THE FIRST SCREAM','The chandeliers swing. Every plate rattles. The crowd begins to turn.'],
+  ['band','THE BAND PLAYS ON','The drummer, bassist, keyboardist and both singers are still performing. None of them are alive.'],
+  ['band','ONE MORE SONG','The stage lights turn red. Hundreds of eyes turn toward the dance floor.']]},
+ {id:'escape',title:'TABLETOP ESCAPE',sub:'RUN FOR EACH OTHER',bpm:156,track:'LAST DANCE',image:'escape',tint:'#ff6f85',panels:[
+  ['band','NO WAY OUT','The doors are blocked. The music is getting louder.'],
+  ['escape','OVER THE TABLES!','They leap onto the banquet tables. Food and silverware explode around them.'],
+  ['escape','DON’T LET GO','Zombies grab at their ankles. For now, they still have each other’s hand.']]}
+];
+const COLORS=['#ff7184','#78ceff','#ffd17d','#bf97ff'];
+const FINALE_PANELS=[
+ ['escape','FOUND YOU','In the crush of the ballroom, they hear each other over the music, lock eyes across the chaos, and fight back toward the same table.'],
+ ['lobby','SIDE BY SIDE','Their hands meet again. Together they shove through the undead crowd, sprint through the lobby, and burst beneath the conference center lights.'],
+ ['drive','THE LAST DANCE','Outside, breathing hard and still laughing in disbelief, they race for the car as dawn edges in. This time, they leave together.']
+];
+let difficulty='story',soundOn=true,screen='home',level=0,panel=0,finaleMode=false,audio=null,musicBus=null,sfxBus=null,notes=[],songStart=0,beatLen=.6,stageDuration=0,nextMusicBeat=0,elapsed=-10,active=false,paused=false,loopId=0,judgeTimeout=0,combo=0,maxCombo=0,score=0,totalScore=0,hits=0,quality=0,judged=0,lastBeatVis=-1,particles=[],laneDown=[false,false,false,false],pointerLanes=new Map(),keyDown=new Set();
+let canvas=$('note-canvas'),g=canvas.getContext('2d'),cw=0,ch=0,ratio=1;
+function display(name){screen=name;for(const s of screens)$(s).classList.toggle('show',s===name);}
+function im(name){return ASSETS[name]||'';}
+function setBg(el,name){el.style.backgroundImage=`url("${im(name)}")`;}
+setBg($('home-bg'),'drive');setBg($('ending-bg'),'lobby');
+function setDiff(d){difficulty=d;$('diff-story').classList.toggle('on',d==='story');$('diff-arcade').classList.toggle('on',d==='arcade');}
+$('diff-story').onclick=()=>setDiff('story');$('diff-arcade').onclick=()=>setDiff('arcade');
+$('sound-btn').onclick=()=>{soundOn=!soundOn;$('sound-btn').textContent=soundOn?'♫ SOUND ON':'♫ SOUND OFF'; if(musicBus)musicBus.gain.value=soundOn?.52:0;if(sfxBus)sfxBus.gain.value=soundOn?.28:0;};
+$('how-btn').onclick=()=>{alert('LAST DANCE AT KOKOMO\n\nTap an arrow as its matching note touches the bright line.\n\nLONG NOTES: hold the arrow until the trailing bar is gone.\n\nPAIRED NOTES: press both arrows together.\n\n★ STAR NOTES: earn a score bonus.\n\nTry STORY for forgiving timing or ARCADE for faster combinations. A missed beat never ends the adventure!\n\nDesktop keys: A / S / W / D or ← / ↓ / ↑ / →.');};
+$('start-btn').onclick=()=>{totalScore=0;level=0;openCinematic();};
+function openCinematic(mode=false){active=false;panel=0;finaleMode=mode;display('story');paintPanel();}
+function showEnding(){$('final-score').textContent='TOTAL SCORE: '+String(totalScore).padStart(6,'0');display('ending');}
+function paintPanel(){
+ let s=STAGES[level],panels=finaleMode?FINALE_PANELS:s.panels,p=panels[panel];
+ setBg($('story-art'),p[0]);
+ $('story-episode').textContent=finaleMode?'FINALE · REUNION':`EPISODE ${String(level+1).padStart(2,'0')} · ${s.track}`;
+ $('story-count').textContent=`${panel+1} / ${panels.length}`;
+ $('story-kicker').textContent=finaleMode?'TRUE ENDING  ·  CINEMATIC':`${level+1} / ${STAGES.length}  ·  CINEMATIC`;
+ $('story-title').textContent=p[1];
+ $('story-desc').textContent=p[2];
+ $('story-dots').innerHTML=panels.map((_,i)=>`<span class="${i===panel?'on':''}"></span>`).join('');
+ $('story-next').textContent=panel<panels.length-1?'NEXT PANEL  ›':(finaleMode?'▶ SEE THE ENDING':'▶ PLAY '+s.title);
+}
+$('story-next').onclick=()=>{
+ let panels=finaleMode?FINALE_PANELS:STAGES[level].panels;
+ if(panel<panels.length-1){panel++;paintPanel();}
+ else if(finaleMode){showEnding();}
+ else startStage();
+};
+$('story-skip').onclick=()=>{if(finaleMode)showEnding();else startStage();};
+function ensureAudio(){if(audio)return;let AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;audio=new AC();musicBus=audio.createGain();sfxBus=audio.createGain();musicBus.gain.value=soundOn?.52:0;sfxBus.gain.value=soundOn?.28:0;musicBus.connect(audio.destination);sfxBus.connect(audio.destination);}
+function tone(f,t,d,type='triangle',volume=.13,dest=musicBus){if(!audio||!dest)return;let o=audio.createOscillator(),a=audio.createGain();o.type=type;o.frequency.setValueAtTime(f,t);a.gain.setValueAtTime(.0001,t);a.gain.exponentialRampToValueAtTime(Math.max(.0002,volume),t+.014);a.gain.exponentialRampToValueAtTime(.0001,t+Math.max(d,.06));o.connect(a);a.connect(dest);o.start(t);o.stop(t+Math.max(d,.06)+.02);}
+let noiseBuffer=null;
+function noise(t,d,vol,high=2000){if(!audio||!musicBus)return;if(!noiseBuffer){noiseBuffer=audio.createBuffer(1,audio.sampleRate,audio.sampleRate);let a=noiseBuffer.getChannelData(0);for(let i=0;i<a.length;i++)a[i]=Math.random()*2-1;}let s=audio.createBufferSource(),f=audio.createBiquadFilter(),a=audio.createGain();s.buffer=noiseBuffer;f.type='highpass';f.frequency.value=high;a.gain.setValueAtTime(vol,t);a.gain.exponentialRampToValueAtTime(.0001,t+d);s.connect(f);f.connect(a);a.connect(musicBus);s.start(t);s.stop(t+d+.012);}
+function kick(t,energy){if(!audio)return;let o=audio.createOscillator(),a=audio.createGain();o.type='sine';o.frequency.setValueAtTime(125,t);o.frequency.exponentialRampToValueAtTime(45,t+.18);a.gain.setValueAtTime(.31*energy,t);a.gain.exponentialRampToValueAtTime(.0001,t+.23);o.connect(a);a.connect(musicBus);o.start(t);o.stop(t+.25);}
+const ROOTS=[110,98,123.47,92.5,103.83,110];
+function musicalBeat(b,t){let s=STAGES[level],bar=Math.floor(b/4),inBar=b%4,root=ROOTS[level]*[1,1,1.1892,.891][bar%4],lvl=level; kick(t,inBar===0?1:.67);if(inBar===1||inBar===3)noise(t,.12,.18+lvl*.009,650);noise(t,.037,.043,4700);if(lvl>=1)noise(t+beatLen*.5,.03,.034,5400);tone(root/2,t,beatLen*.54,'sawtooth',.076);if(inBar===0){tone(root*2,t,beatLen*3.2,'triangle',.028);tone(root*2*1.1892,t,beatLen*3.1,'sine',.020);tone(root*2*1.4983,t,beatLen*2.9,'sine',.017);}if(lvl>=2){let arp=[0,3,7,10,7,3,10,7];for(let k=0;k<(lvl>=4?4:2);k++){let step=(b*(lvl>=4?4:2)+k)%8;tone(root*2*Math.pow(2,arp[step]/12),t+k*beatLen/(lvl>=4?4:2),beatLen*.24,'square',.018);}}if(lvl>=4&&inBar===3)noise(t+beatLen*.75,.025,.06,6000);}
+function hitSound(lane,kind){if(!soundOn||!audio)return;const f=[330,392,494,587][lane],t=audio.currentTime;tone(kind==='perfect'?f*2:f,t,.10,'sine',kind==='perfect'?.19:.11,sfxBus);}
+function countSound(){if(!audio||!soundOn)return;for(let i=0;i<3;i++)tone(440+i*85,audio.currentTime+.08+i*.43,.12,'square',.1,sfxBus);tone(740,audio.currentTime+1.35,.20,'sine',.22,sfxBus);}
+function rng(seed){return ()=>{seed|=0;seed=(seed+0x6D2B79F5)|0;let t=Math.imul(seed^(seed>>>15),1|seed);t^=t+Math.imul(t^(t>>>7),61|t);return ((t^(t>>>14))>>>0)/4294967296;}}
+function chart(i){let arr=[],random=rng(121+i*673),per=60/STAGES[i].bpm,occupied=[0,0,0,0],easy=difficulty==='story';function add(beat,lane,kind='tap',dur=0){let time=beat*per;if(time<occupied[lane]+.10)return;arr.push({t:time,lane,kind,dur:dur*per,status:'pending',held:false,releaseAt:0});occupied[lane]=(beat+Math.max(dur,.05))*per;}
+let lines=[0,1,2,3,1,2,0,3,2,1,3,0,1,0,3,2];for(let b=2;b<32;b++){
+let l=(lines[b%16]+i+Math.floor(b/8))%4;if(i===0){if(b%2===0||b%3===0)add(b,l,b===8||b===22?'hold':'tap',b===8||b===22?1.25:0);}
+else{if(b%1===0){let hold=(b===8||b===21)||(i>=3&&b===15);add(b,l,hold?'hold':(b===27?'star':'tap'),hold?1.5:0);}
+if(i>=1&&b%7===5)add(b+.5,(l+2)%4,'tap');
+if(i>=2&&b%8===0)add(b,(l+2)%4,'tap');
+if(i>=3&&b%4===2&&!easy)add(b+.5,(l+1)%4,'tap');
+if(i>=4&&b%8===5){add(b+.5,(l+1)%4,'tap');if(!easy)add(b+.75,(l+3)%4,'star');}
+if(i===5&&b%6===4&&!easy)add(b+.25,(l+2)%4,'tap');
+}}
+return arr.sort((a,b)=>a.t-b.t||a.lane-b.lane);}
+function startStage(){ensureAudio();if(audio)audio.resume().catch(()=>{});display('game');$('pause-screen').style.display='none';let s=STAGES[level];setBg($('stage-hero'),s.image);$('stage-title').textContent=s.title;$('stage-subtitle').textContent=s.sub;$('stage-label').textContent=`CH.${String(level+1).padStart(2,'0')} · ${s.title}`;$('bpm-indicator').textContent=s.bpm+' BPM';$('score').textContent='000000';$('progress').style.width='0';$('combo-num').textContent='0';$('judge').classList.remove('pop');beatLen=60/s.bpm;notes=chart(level);stageDuration=32*beatLen+.75;nextMusicBeat=0;lastBeatVis=-1;combo=0;maxCombo=0;score=0;hits=0;judged=0;quality=0;particles=[];elapsed=-1.5;laneDown.fill(false);pointerLanes.clear();keyDown.clear();resize();songStart=(audio?audio.currentTime:performance.now()/1000)+1.5;active=true;paused=false;lastFrame=performance.now();if(!loopId)loopId=requestAnimationFrame(frame);$('count-in').classList.add('show');countSound();}
+function now(){return audio?audio.currentTime:performance.now()/1000;}
+function scheduleMusic(){if(!audio)return;while(nextMusicBeat<32&&songStart+nextMusicBeat*beatLen<audio.currentTime+.25){let t=songStart+nextMusicBeat*beatLen;if(t>=audio.currentTime-.05)musicalBeat(nextMusicBeat,t);nextMusicBeat++;}}
+function resize(){let rect=canvas.getBoundingClientRect();if(rect.width===0||rect.height===0)return;cw=rect.width;ch=rect.height;ratio=Math.min(2,window.devicePixelRatio||1);canvas.width=Math.round(cw*ratio);canvas.height=Math.round(ch*ratio);g.setTransform(ratio,0,0,ratio,0,0);}
+window.addEventListener('resize',()=>resize());
+function polygonArrow(x,y,r,rot){g.save();g.translate(x,y);g.rotate(rot);g.beginPath();g.moveTo(0,-r);g.lineTo(r*.92,-r*.08);g.lineTo(r*.43,-r*.08);g.lineTo(r*.43,r*.83);g.lineTo(-r*.43,r*.83);g.lineTo(-r*.43,-r*.08);g.lineTo(-r*.92,-r*.08);g.closePath();g.fill();g.stroke();g.restore();}
+function drawStar(x,y,r){g.beginPath();for(let k=0;k<10;k++){let a=-Math.PI/2+k*Math.PI/5,R=k%2?r*.49:r;g.lineTo(x+Math.cos(a)*R,y+Math.sin(a)*R);}g.closePath();g.fill();g.stroke();}
+const rotations=[-Math.PI/2,Math.PI,0,Math.PI/2];let lastFrame=0;
+function render(){if(!cw||!ch)return;g.clearRect(0,0,cw,ch);let w=cw/4,hitY=ch-46,speed=Math.max(151,(ch-55)/2.08),pulse=(elapsed>0?(Math.sin(elapsed/beatLen*Math.PI*2)+1)/2:0);for(let lane=0;lane<4;lane++){let x=(lane+.5)*w;g.fillStyle=COLORS[lane]+'0c';g.fillRect(lane*w,0,w,ch);if(laneDown[lane]){g.fillStyle=COLORS[lane]+'22';g.fillRect(lane*w,hitY-28,w,63);}g.fillStyle='#ffffff0b';g.fillRect(lane*w,0,1,ch);g.globalAlpha=.15+pulse*.12;g.fillStyle=COLORS[lane];g.fillRect(lane*w,hitY-3,w,6);g.globalAlpha=1;g.strokeStyle=COLORS[lane];g.lineWidth=2.3;g.shadowColor=COLORS[lane];g.shadowBlur=laneDown[lane]?27:10;g.strokeRect(x-21,hitY-21,42,42);g.shadowBlur=0;g.fillStyle=COLORS[lane]+'80';polygonArrow(x,hitY,13,rotations[lane]);}
+for(let i=0;i<notes.length;i++){let n=notes[i];if(n.status==='missed'||n.status==='hit')continue;let y=hitY-(n.t-elapsed)*speed;if(y< -n.dur*speed-48||y>ch+45)continue;let x=(n.lane+.5)*w,c=COLORS[n.lane];if(n.kind==='hold'){let h=n.dur*speed;if(n.status==='holding'){h=Math.max(0,(n.t+n.dur-elapsed)*speed);y=hitY;}g.fillStyle=c+'72';g.fillRect(x-13,y-h,26,h);g.strokeStyle=c;g.lineWidth=3;g.strokeRect(x-13,y-h,26,h);g.fillStyle='#ffffffd9';g.fillRect(x-10,y-h-5,20,6);}
+let scale=n.kind==='star'?1.09:1;g.fillStyle=n.kind==='star'?'#fff4bc':c;g.strokeStyle='#f5f6f8';g.lineWidth=2;g.shadowColor=c;g.shadowBlur=13;g.beginPath();g.roundRect(x-22*scale,y-22*scale,44*scale,44*scale,9);g.fill();g.stroke();g.shadowBlur=0;g.fillStyle='#1c1831';g.strokeStyle='#1c1831';if(n.kind==='star')drawStar(x,y,15);else polygonArrow(x,y,15,rotations[n.lane]);
+}
+for(let i=particles.length-1;i>=0;i--){let p=particles[i];p.x+=p.vx;p.y+=p.vy;p.vy+=.15;p.life-=.025;if(p.life<=0){particles.splice(i,1);continue;}g.globalAlpha=p.life;g.fillStyle=p.color;g.fillRect(p.x,p.y,p.size,p.size);}g.globalAlpha=1;}
+function popJudge(text,kind){let el=$('judge');el.textContent=text;el.style.color=kind==='perfect'?'#ffe1a1':kind==='great'?'#8eeeda':kind==='good'?'#9ccafc':'#ff8e9c';el.classList.remove('pop');void el.offsetWidth;el.classList.add('pop');clearTimeout(judgeTimeout);judgeTimeout=setTimeout(()=>el.classList.remove('pop'),310);}
+function spark(lane,kind){let random=rng((hits+1)*111),x=(lane+.5)*cw/4,y=ch-46;for(let j=0;j<(kind==='perfect'?15:8);j++)particles.push({x,y,vx:(random()-.5)*12,vy:(random()-.5)*9,life:1,size:2+random()*4,color:COLORS[lane]});}
+function rating(delta){let a=Math.abs(delta),story=difficulty==='story';if(a<=(story?.13:.082))return ['PERFECT',1,'perfect'];if(a<=(story?.26:.15))return ['GREAT',.82,'great'];if(a<=(story?.44:.255))return ['GOOD',.60,'good'];return null;}
+function press(lane){if(!active||paused||elapsed<-.20)return;laneDown[lane]=true;let nearest=null,dist=Infinity;for(let n of notes){if(n.lane!==lane||n.status!=='pending')continue;let d=Math.abs(n.t-elapsed);if(d<dist){nearest=n;dist=d;}}let r=nearest?rating(nearest.t-elapsed):null;if(!r)return;nearest.status=nearest.kind==='hold'?'holding':'hit';nearest.held=nearest.kind==='hold';if(nearest.kind!=='hold')applyHit(nearest,r);else{popJudge('HOLD!', 'great');spark(lane,'great');hitSound(lane,'great');}}
+function applyHit(n,r){let [label,weight,k]=r;let points=Math.round(1000*weight*(n.kind==='star'?1.65:1)*(1+Math.min(30,combo)*.012));score+=points;quality+=weight;hits++;judged++;combo++;maxCombo=Math.max(combo,maxCombo);$('combo-num').textContent=combo;$('score').textContent=String(score).padStart(6,'0');popJudge(n.kind==='star'?'★ BONUS!':label,k);spark(n.lane,k);hitSound(n.lane,k);if(navigator.vibrate&&soundOn)navigator.vibrate(9);}
+function release(lane){laneDown[lane]=false;for(let n of notes){if(n.lane===lane&&n.status==='holding'){if(elapsed>=n.t+n.dur-.14){n.status='hit';applyHit(n,['HOLD!',1,'perfect']);}else{n.status='missed';applyMiss();}}}}
+function applyMiss(){judged++;combo=0;$('combo-num').textContent='0';popJudge('MISS','miss');}
+function finishPending(){for(let n of notes){if(n.status==='pending'&&elapsed>n.t+(difficulty==='story'?.44:.26)){n.status='missed';applyMiss();}else if(n.status==='holding'&&elapsed>=n.t+n.dur){n.status='hit';applyHit(n,['HOLD!',1,'perfect']);}}}
+function frame(t){loopId=requestAnimationFrame(frame);if(!active||paused)return;let dt=Math.min((t-lastFrame)/1000,.06);lastFrame=t;elapsed=now()-songStart;if(elapsed<0){$('count-in').classList.add('show');let n=elapsed<-.96?'3':elapsed<-.49?'2':'1';$('count-in').innerHTML=`<div><small>GET READY</small>${n}</div>`;}else{$('count-in').classList.remove('show');}
+if(audio)scheduleMusic();finishPending();render();$('progress').style.width=(Math.max(0,Math.min(1,elapsed/stageDuration))*100).toFixed(1)+'%';if(elapsed>stageDuration){endStage();}}
+function endStage(){active=false;for(let n of notes){if(n.status==='pending'){n.status='missed';judged++;}}totalScore+=score;let acc=judged?quality/judged:0;let grade=acc>=.93?'S':acc>=.82?'A':acc>=.67?'B':acc>=.48?'C':'D';$('result-grade').textContent=grade;$('res-score').textContent=String(score).padStart(6,'0');$('res-acc').textContent=Math.round(acc*100)+'%';$('res-combo').textContent=maxCombo;$('result-chapter').textContent=`CHAPTER ${String(level+1).padStart(2,'0')} • ${STAGES[level].title}`;$('result-note').textContent=level===STAGES.length-1?(acc>.85?'You fought your way back to each other.':'The reunion is close—one more cinematic beat.'):(acc>.85?'A perfect escape—almost.':acc>.6?'You kept your nerve. Keep moving.':'The rhythm broke, but your story continues.');setBg($('result-bg'),STAGES[level].image);$('continue-btn').textContent=level===STAGES.length-1?'▶ REUNION FINALE':'▶ NEXT CINEMATIC';display('results');try{let p=Number(localStorage.getItem('kokomo_rhythm_best')||0);if(totalScore>p)localStorage.setItem('kokomo_rhythm_best',String(totalScore));}catch(_){} }
+$('continue-btn').onclick=()=>{if(level<STAGES.length-1){level++;openCinematic();}else{openCinematic(true);}};
+$('replay-btn').onclick=()=>{level=0;totalScore=0;openCinematic();};
+$('pause-btn').onclick=pauseGame;
+function pauseGame(){if(!active||paused)return;paused=true;if(audio)audio.suspend();$('pause-screen').style.display='flex';}
+function resumeGame(){if(!paused)return;paused=false;if(audio)audio.resume().catch(()=>{});lastFrame=performance.now();$('pause-screen').style.display='none';}
+$('resume-btn').onclick=resumeGame;$('restart-btn').onclick=()=>{paused=false;startStage();};$('home-btn').onclick=()=>{paused=false;active=false;if(audio)audio.suspend();$('pause-screen').style.display='none';display('home');};
+for(const el of document.querySelectorAll('.pad')){let lane=Number(el.dataset.lane);el.addEventListener('pointerdown',e=>{e.preventDefault();try{el.setPointerCapture(e.pointerId);}catch(_){}pointerLanes.set(e.pointerId,lane);el.classList.add('down');press(lane);});el.addEventListener('pointerup',e=>{e.preventDefault();pointerLanes.delete(e.pointerId);el.classList.remove('down');release(lane);});el.addEventListener('pointercancel',e=>{pointerLanes.delete(e.pointerId);el.classList.remove('down');release(lane);});el.addEventListener('lostpointercapture',e=>{if(pointerLanes.has(e.pointerId)){pointerLanes.delete(e.pointerId);el.classList.remove('down');release(lane);}});}
+const keymap={ArrowLeft:0,ArrowDown:1,ArrowUp:2,ArrowRight:3,a:0,s:1,w:2,d:3,A:0,S:1,W:2,D:3};document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(paused)resumeGame();else if(active)pauseGame();return;}let l=keymap[e.key];if(l===undefined)return;e.preventDefault();if(keyDown.has(e.key))return;keyDown.add(e.key);document.querySelector(`.pad[data-lane="${l}"]`).classList.add('down');press(l);});document.addEventListener('keyup',e=>{let l=keymap[e.key];if(l===undefined)return;e.preventDefault();keyDown.delete(e.key);document.querySelector(`.pad[data-lane="${l}"]`).classList.remove('down');release(l);});
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&active&&!paused)pauseGame();});
+</script>
+</body>
+</html>
