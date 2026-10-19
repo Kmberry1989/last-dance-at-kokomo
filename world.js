@@ -340,7 +340,7 @@
   // Use a single visual loop. Gameplay pauses do not advance the fight clock.
   let lastVisual=performance.now()/1000;
   function animate(ms){
-    const t=ms/1000,dt=Math.min(.05,Math.max(0,t-lastVisual));lastVisual=t;
+    const t=ms/1000,dt=Math.min(.5,Math.max(0,t-lastVisual));lastVisual=t;
     if(screen==='game'&&!paused)drawRhythm(t);
     if(screen==='fight'){if(!paused)tickFight(dt);drawFight(reduceMotion?0:t);}
     requestAnimationFrame(animate);
