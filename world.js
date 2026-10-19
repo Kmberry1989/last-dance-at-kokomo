@@ -11,7 +11,7 @@
     const img = new Image(); art[name] = img;
     img.onload = () => resolve(true);
     img.onerror = () => { loadProblem = true; resolve(false); };
-    img.src = `assets/${name}.webp?v=3`;
+    img.src = `assets/${name}.webp?v=${name === 'band-enemies' ? 4 : 3}`;
   }));
   const ready = Promise.all([...preload, fetch('assets/sprites.json?v=3').then(r => {
     if (!r.ok) throw new Error('Sprite metadata unavailable'); return r.json();
