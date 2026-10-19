@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
 <meta name="theme-color" content="#070b16">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -25,6 +25,7 @@
 #pause-screen{display:none;position:absolute;inset:0;background:#050915ed;z-index:20;padding:30px;align-items:center;justify-content:center}.pause-card{text-align:center;max-width:320px;width:100%}.pause-card h2{font-size:39px;line-height:1;margin:0 0 18px}.pause-card button{margin-top:14px}.modal-help{line-height:1.7;color:#d1c9d3;font-size:14px;margin-bottom:25px}
 @media(max-height:680px){#home{padding:18px 20px 23px}.h-title{font-size:48px;margin:7px 0}.keys-mini{margin:12px 0 6px}.keys-mini span{line-height:43px}.stage-hero{height:110px}.control-wrap{padding-top:6px}.note-legend{height:13px}.pad{height:67px}.game-bar{padding-top:6px}.story-title{font-size:32px}.story-desc{font-size:13px}}
 </style>
+<link rel="stylesheet" href="world.css?v=2">
 </head>
 <body>
 <div id="app">
@@ -185,8 +186,9 @@ function pauseGame(){if(!active||paused)return;paused=true;if(audio)audio.suspen
 function resumeGame(){if(!paused)return;paused=false;if(audio)audio.resume().catch(()=>{});lastFrame=performance.now();$('pause-screen').style.display='none';}
 $('resume-btn').onclick=resumeGame;$('restart-btn').onclick=()=>{paused=false;startStage();};$('home-btn').onclick=()=>{paused=false;active=false;if(audio)audio.suspend();$('pause-screen').style.display='none';display('home');};
 for(const el of document.querySelectorAll('.pad')){let lane=Number(el.dataset.lane);el.addEventListener('pointerdown',e=>{e.preventDefault();try{el.setPointerCapture(e.pointerId);}catch(_){}pointerLanes.set(e.pointerId,lane);el.classList.add('down');press(lane);});el.addEventListener('pointerup',e=>{e.preventDefault();pointerLanes.delete(e.pointerId);el.classList.remove('down');release(lane);});el.addEventListener('pointercancel',e=>{pointerLanes.delete(e.pointerId);el.classList.remove('down');release(lane);});el.addEventListener('lostpointercapture',e=>{if(pointerLanes.has(e.pointerId)){pointerLanes.delete(e.pointerId);el.classList.remove('down');release(lane);}});}
-const keymap={ArrowLeft:0,ArrowDown:1,ArrowUp:2,ArrowRight:3,a:0,s:1,w:2,d:3,A:0,S:1,W:2,D:3};document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(paused)resumeGame();else if(active)pauseGame();return;}let l=keymap[e.key];if(l===undefined)return;e.preventDefault();if(keyDown.has(e.key))return;keyDown.add(e.key);document.querySelector(`.pad[data-lane="${l}"]`).classList.add('down');press(l);});document.addEventListener('keyup',e=>{let l=keymap[e.key];if(l===undefined)return;e.preventDefault();keyDown.delete(e.key);document.querySelector(`.pad[data-lane="${l}"]`).classList.remove('down');release(l);});
+const keymap={ArrowLeft:0,ArrowDown:1,ArrowUp:2,ArrowRight:3,a:0,s:1,w:2,d:3,A:0,S:1,W:2,D:3};document.addEventListener('keydown',e=>{if(screen==='fight')return;if(e.key==='Escape'){if(paused)resumeGame();else if(active)pauseGame();return;}let l=keymap[e.key];if(l===undefined)return;e.preventDefault();if(keyDown.has(e.key))return;keyDown.add(e.key);document.querySelector(`.pad[data-lane="${l}"]`).classList.add('down');press(l);});document.addEventListener('keyup',e=>{let l=keymap[e.key];if(l===undefined)return;e.preventDefault();keyDown.delete(e.key);document.querySelector(`.pad[data-lane="${l}"]`).classList.remove('down');release(l);});
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&active&&!paused)pauseGame();});
 </script>
+<script src="world.js?v=2"></script>
 </body>
 </html>

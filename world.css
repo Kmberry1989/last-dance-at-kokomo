@@ -1,0 +1,44 @@
+/* Artwork stays inside each screen's stacking context. */
+.screen{isolation:isolate}
+#app{min-height:0;height:100dvh;max-height:1100px}
+html,body{touch-action:manipulation}
+.text-btn{min-height:44px;min-width:44px}
+.backdrop,.story-art{z-index:0}
+.screen>.topline,.home-content,.home-controls,.story-content,.story-top,.result-panel,#ending>.brand,#ending>.ending-title,#ending>.ending-desc,#ending>.chip,#ending>.big-btn,#ending>.footer-hint{position:relative;z-index:2}
+.bottom-fog{z-index:1}
+#story{padding:0;background:#070a15;justify-content:flex-end}
+.story-art{inset:0 0 30%;background-position:center 38%;animation:pushin 16s ease-in-out infinite alternate;image-rendering:auto}
+.story-art:after{background:linear-gradient(180deg,#03071428,transparent 65%,#070a15)}
+.story-top{position:absolute;top:calc(env(safe-area-inset-top) + 15px);left:16px;right:16px;z-index:4}
+.story-content{padding:18px 20px calc(env(safe-area-inset-bottom) + 20px);background:linear-gradient(0deg,#070a15 86%,#070a1500);width:100%}
+.story-title{font-size:clamp(27px,7.5vw,40px);margin:8px 0 10px}
+.story-desc{font-size:clamp(14px,3.7vw,16px);line-height:1.55;margin-bottom:12px;max-width:48ch}
+.story-dots{margin:12px 0 18px}.story-skips .text-btn{padding:10px;min-width:65px}
+.story-speaker{color:var(--mint);font-size:10px;font-weight:900;letter-spacing:.15em;margin-bottom:8px;text-transform:uppercase}
+.story-art-label{position:absolute;left:17px;top:58%;z-index:3;color:white;font-size:10px;letter-spacing:.13em;font-weight:800;text-shadow:0 2px 6px #000}
+.stage-hero{height:clamp(190px,32dvh,310px);background-size:cover;overflow:hidden;isolation:isolate}
+.stage-hero:after{background:linear-gradient(0deg,#060a1599,transparent 32%,#05081518);z-index:1;pointer-events:none}
+#world-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.stage-copy{bottom:11px;left:14px;right:12px;z-index:3}.stage-copy small{display:block;color:#fff2d8;font-size:10px;letter-spacing:.03em;font-weight:750;text-shadow:0 2px 4px #000;max-width:42ch;line-height:1.4}
+.stage-copy strong{font-size:14px;color:var(--gold);margin-bottom:3px}.stage-hero .chapter{z-index:3;font-size:9px}
+.world-action{position:absolute;top:10px;left:12px;z-index:3;font-size:9px;letter-spacing:.1em;font-weight:900;background:#070a15bb;padding:5px 8px;border:1px solid #ffffff30;border-radius:5px}
+.board-wrap{padding:0 12px}.board canvas{min-height:100px}.note-legend{font-size:9px}
+.control-wrap .pad{height:clamp(66px,10dvh,88px)}
+.game-bar .stage-label{max-width:60%;font-size:11px}
+.route-button{background:transparent;color:#ddd;border:1px solid #ffffff36;border-radius:9px;font-weight:850;font-size:10px;letter-spacing:.12em;min-height:44px;padding:10px}
+.motion-button{color:#d8d2e2;font-size:10px;letter-spacing:.06em;border:none;background:none;min-height:44px}
+#chapter-dialog{border:1px solid #ffffff40;color:var(--cream);background:#0a1020;border-radius:16px;max-width:480px;width:calc(100vw - 32px);max-height:85dvh;padding:22px;box-shadow:0 24px 90px #000c}
+#chapter-dialog::backdrop{background:#02050dcf}#chapter-dialog h2{font-size:27px;letter-spacing:-.04em;margin:8px 0 14px}#chapter-dialog p{font-size:13px;line-height:1.5;color:#c9c7d4}
+.chapter-list{display:grid;gap:7px}.chapter-link{display:flex;align-items:center;gap:12px;padding:12px;min-height:56px;text-align:left;border:1px solid #ffffff26;background:#ffffff09;color:var(--cream);border-radius:8px;font-weight:800;font-size:12px}.chapter-link span{color:var(--gold);font-size:11px}.chapter-link small{display:block;font-weight:500;color:#c3c4cf;font-size:10px;margin-top:4px}.chapter-link img{width:56px;height:40px;object-fit:cover;border-radius:3px}
+#fight{flex-direction:column;background:#090b17}.fight-bar{padding:calc(env(safe-area-inset-top) + 12px) 16px 12px;background:#0a0e1d;z-index:2;flex-shrink:0}.fight-bar h2{font-size:23px;letter-spacing:-.04em;margin:4px 0 10px}.fight-status{display:flex;justify-content:space-between;font-size:10px;color:#dbd4dd;letter-spacing:.08em;font-weight:900}.fight-status b{color:var(--gold)}
+.fight-health{height:6px;border-radius:3px;background:#2d2d3e;margin-top:8px;overflow:hidden}.fight-health span{display:block;height:100%;background:var(--mint);width:100%;transition:width .2s}
+.fight-scene{position:relative;flex:1;min-height:170px;overflow:hidden;background:#12182a}.fight-scene canvas{width:100%;height:100%;position:absolute;inset:0}.fight-cue{position:absolute;left:12px;right:12px;top:14px;text-align:center;z-index:2;pointer-events:none}.fight-cue strong{display:inline-block;color:#fff3d9;background:#060b19de;padding:9px 16px;border:1px solid #ffffff44;font-size:15px;letter-spacing:.08em;border-radius:6px}.fight-cue small{display:block;color:white;font-size:11px;margin-top:7px;text-shadow:0 1px 5px #000}
+.fight-dialogue{padding:14px 18px;background:#0b1020;border-top:1px solid #ffffff24;font-size:14px;line-height:1.5;min-height:72px;flex-shrink:0}.fight-controls{padding:12px 14px calc(env(safe-area-inset-bottom) + 16px);display:grid;grid-template-columns:1fr 1.3fr 1fr;gap:8px;background:#080c18;flex-shrink:0}.fight-button{touch-action:none;user-select:none;border:1px solid #ffffff4a;border-radius:10px;min-height:72px;color:var(--cream);font-weight:1000;letter-spacing:.06em;background:#20263e;box-shadow:inset 0 -5px #0005;font-size:12px}.fight-button small{display:block;font-size:9px;font-weight:600;color:#bfc5d8;margin-top:5px;letter-spacing:.03em}.fight-button.strike{background:#ffcc73;color:#221426}.fight-button.strike small{color:#50304b}.fight-button.held{background:#23756c;color:white}.fight-button:active{transform:translateY(2px)}
+.fight-intro{position:absolute;inset:0;z-index:4;background:linear-gradient(0deg,#070b18f0,#070b1855);display:flex;flex-direction:column;justify-content:flex-end;padding:24px 21px;gap:11px}.fight-intro h3{margin:0;font-size:35px;letter-spacing:-.05em;line-height:1}.fight-intro p{font-size:14px;line-height:1.6;max-width:42ch;margin:0 0 6px}.fight-intro[hidden]{display:none}.fight-intro .secondary{text-align:center}.fight-skip{border:0;background:none;color:#e5d5cf;min-height:44px;font-size:10px;letter-spacing:.1em;font-weight:800}
+#fight-progress{height:4px;background:linear-gradient(90deg,var(--coral),var(--gold));width:0%;transition:width .3s}
+.world-tip{font-size:10px;color:#c0c9d6;text-align:center;line-height:1.5;margin:10px 0 0}
+.asset-warning{position:absolute;top:55px;left:14px;right:14px;z-index:4;background:#190f22ed;border:1px solid var(--coral);padding:9px;font-size:12px;border-radius:7px}
+@media(max-height:740px){.stage-hero{height:clamp(160px,28dvh,205px)}.game-bar{padding-top:calc(env(safe-area-inset-top) + 5px);padding-bottom:5px}.progress-rail{margin-top:5px}.stage-copy strong{font-size:12px}.stage-copy small{font-size:9px}.pad .num{font-size:8px}.story-content{padding:13px 16px calc(env(safe-area-inset-bottom) + 15px)}.story-desc{font-size:14px;margin-bottom:8px}.story-title{font-size:28px}.story-dots{margin:8px 0 13px}.fight-bar h2{font-size:20px}.fight-dialogue{font-size:12px;min-height:62px;padding:10px 14px}.fight-button{min-height:65px}.fight-intro h3{font-size:29px}.home-content{padding-bottom:6px}.home-controls{gap:8px}.h-title{font-size:44px}.keys-mini{margin:12px 0 6px}.tagline{font-size:13px}.home-group{padding:7px 10px}}
+@media(max-height:580px) and (orientation:landscape){#app{width:min(100vw,950px);border-radius:0}#game{display:none;flex-flow:row wrap}#game.show{display:flex}.game-bar{width:100%;height:50px}.stage-hero{width:52%;height:calc(100% - 50px)}.board-wrap{width:48%;height:calc(100% - 145px);flex:0 0 48%}.control-wrap{position:absolute;right:0;bottom:0;width:48%;height:95px}.control-wrap .pad{height:55px}.story-art{inset:0 42% 0 0}.story-content{margin-left:auto;width:45%;height:100%;display:flex;flex-direction:column;justify-content:flex-end;background:#070a15}.story-top{right:48%}.story-art-label{top:auto;bottom:20px}.story-title{font-size:25px}.story-desc{font-size:12px}.story-kicker{font-size:9px}.story-dots{margin:4px 0 10px}.story-skips .big-btn{min-height:45px;font-size:10px}.fight-scene{min-height:120px}.fight-controls{padding:8px 12px}.fight-button{min-height:45px}.fight-dialogue{display:none}.fight-bar{padding-top:7px}.fight-bar h2{margin-bottom:5px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}.story-art{transform:none}}
+.reduce-motion .story-art{animation:none;transform:none}.reduce-motion *{scroll-behavior:auto}
