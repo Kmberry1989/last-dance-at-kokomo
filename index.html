@@ -189,6 +189,6 @@ for(const el of document.querySelectorAll('.pad')){let lane=Number(el.dataset.la
 const keymap={ArrowLeft:0,ArrowDown:1,ArrowUp:2,ArrowRight:3,a:0,s:1,w:2,d:3,A:0,S:1,W:2,D:3};document.addEventListener('keydown',e=>{if(screen==='fight')return;if(e.key==='Escape'){if(paused)resumeGame();else if(active)pauseGame();return;}let l=keymap[e.key];if(l===undefined)return;e.preventDefault();if(keyDown.has(e.key))return;keyDown.add(e.key);document.querySelector(`.pad[data-lane="${l}"]`).classList.add('down');press(l);});document.addEventListener('keyup',e=>{let l=keymap[e.key];if(l===undefined)return;e.preventDefault();keyDown.delete(e.key);document.querySelector(`.pad[data-lane="${l}"]`).classList.remove('down');release(l);});
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&active&&!paused)pauseGame();});
 </script>
-<script src="world.js?v=3"></script>
+<script src="world.js?v=4"></script>
 </body>
 </html>
